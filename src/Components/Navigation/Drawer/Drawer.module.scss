@@ -1,0 +1,60 @@
+.Drawer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 80%;
+  height: 100%;
+  max-width: 300px;
+  padding: 20px 0px;
+  box-sizing: border-box;
+  background: #fff;
+  z-index: 90;
+  transform: translateX(0px);
+  transition: transform 0.7s ease-in-out;
+  box-shadow: 1px 0px 15px 0px rgba(150, 150, 150, 0.45);
+  &.close {
+    transform: translateX(-300px);
+    transition: transform 0.7s ease-in-out;
+  }
+  & ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    & li {
+      display: flex;
+      margin: 20px;
+      & a {
+        font-weight: bold;
+        color: #363554;
+        font-size: 20px;
+        text-decoration: none;
+        background-color: transparent;
+        position: relative;
+        padding: 5px 12px 5px 12px;
+        transition: all 0.3s ease-in-out;
+        &:hover,
+        .active {
+          //   opacity: 0.4;
+          &:hover {
+            color: #fd4c00;
+            transition: all 0.3s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+  & input {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    padding: 10px 15px;
+    box-shadow: 1px 0px 15px 0px rgba(150, 150, 150, 0.45);
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    color: #fd4c00;
+  }
+}

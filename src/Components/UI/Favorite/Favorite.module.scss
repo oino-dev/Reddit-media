@@ -1,0 +1,10 @@
+.Favorite {
+  color: #ccc;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  
+  &:hover {
+    color: #fd4c00;
+    transition: all 0.3s ease-in-out;
+  }
+}

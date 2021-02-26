@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+  background: linear-gradient(90deg, #D6D9D0  0%, #B1B6B7  100%);
+}

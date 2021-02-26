@@ -1,0 +1,14 @@
+.ButtonNext {
+  border: 2px solid #fd4c00;
+  border-radius: 20px;
+  outline: none;
+  position: fixed;
+  bottom: 30px;
+  left: calc((100% / 2) + 52px);
+  background-color: #fd4c00;
+  padding: 7px 19px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+}
