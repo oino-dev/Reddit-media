@@ -52,16 +52,15 @@ const PostsList = ({ content }) => {
                                 <GridListTile key={tile.data.id}>
                                     {tile.data.is_video === false
                                         ? <img src={tile.data.url} alt={tile.data.author} />
-                                        : <video controls autoplay='true' loop
+                                        : <video controls autoPlay loop
                                             src={tile.data.media.reddit_video.fallback_url}
                                         >
-
                                         </video>
                                     }
                                     <GridListTileBar
                                         title={tile.data.title}
                                         subtitle={<span>posted by: <a
-                                            href={'https://www.reddit.com/user/' + tile.data.author} t
+                                            href={'https://www.reddit.com/user/' + tile.data.author}
                                             target="_blank"
                                             rel="noreferrer"
                                             className={classes.a}

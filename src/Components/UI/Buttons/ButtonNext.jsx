@@ -18,7 +18,7 @@ const ButtonNext = (props) => {
     return (
 
         <div className={classes.root}>
-            <Button variant="contained" color="primary">
+            <Button onClick={props.onClick} variant="contained" color="primary">
                 дальше <ArrowForward />
             </Button>
         </div>
