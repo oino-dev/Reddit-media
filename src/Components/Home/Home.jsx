@@ -75,7 +75,7 @@ export default class Home extends Component {
                     posts: data.data.children,
                     after: data.data.after,
                     before: data.data.before,
-                    page: this.state.page++
+                    page: this.state.page + 1
                 })
                 window.scrollTo(0, 0)
             })
@@ -99,7 +99,7 @@ export default class Home extends Component {
                     posts: data.data.children,
                     after: data.data.after,
                     before: data.data.before,
-                    page: this.state.page++
+                    page: this.state.page - 1
                 })
                 window.scrollTo(0, 0)
             })
@@ -122,8 +122,8 @@ export default class Home extends Component {
 
         let contentMedia
         if (this.state.posts.length > 0) {
-            contentMedia = <div className={s.Content} > <PostList content={this.state.posts} /></div>
-        } else contentMedia = <div className={s.noMedia}>Loading posts</div>
+            contentMedia = <div > <PostList content={this.state.posts} /></div>
+        } else contentMedia = <div className={s.noMedia}>Котиков слишком много....загружаю...</div>
 
         return (
             <React.Fragment>

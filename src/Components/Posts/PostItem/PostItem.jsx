@@ -1,85 +1,96 @@
-// import React from 'react'
-// import s from './PostItem.module.scss'
-// import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// import GridListTile from '@material-ui/core/GridListTile';
-// import GridListTileBar from '@material-ui/core/GridListTileBar';
-// import ListSubheader from '@material-ui/core/ListSubheader';
-// import IconButton from '@material-ui/core/IconButton';
-// import InfoIcon from '@material-ui/icons/Info'
 
-// import FavoriteButton from '../../UI/Favorite/Favorite'
+const useStyles = makeStyles((theme) => ({
+    root: {
+        maxWidth: 345,
+        margin: 15,
+    },
+    media: {
+        width: 400,
+        height: 400,
+        // paddingTop: '56.25%',
 
-// const PostItem = ({ postslist }) => {
+    },
+    expand: {
+        transform: 'rotate(0deg)',
+        marginLeft: 'auto',
+        transition: theme.transitions.create('transform', {
+            duration: theme.transitions.duration.shortest,
+        }),
+    },
+    expandOpen: {
+        transform: 'rotate(180deg)',
+    },
 
-//     const useStyles = makeStyles((theme) => ({
-//         root: {
-//             display: 'flex',
-//             flexWrap: 'wrap',
-//             justifyContent: 'space-around',
-//             overflow: 'hidden',
-//             backgroundColor: theme.palette.background.paper,
-//         },
-//         gridList: {
-//             width: 500,
-//             height: 450,
-//         },
-//         icon: {
-//             color: 'rgba(255, 255, 255, 0.54)',
-//         },
-//     }));
-
-//     const classes = useStyles();
-
-//     if (postslist.data.preview) {
-//         let postlink = 'https://www.reddit.com/' + postslist.data.permalink
-//         return (
-//             <div className={classes.root}>
-
-//                 <GridListTile key={postslist.data.id}>
-//                     <img src={postslist.data.url} alt={postslist.data.title} />
-
-//                 </GridListTile>
-
-//             </div >
-
-//         )
-//     }
+}));
 
 
 
-//     return (
 
-//         <div>
+const PostItem = (props) => {
+    const classes = useStyles();
+    const [expanded, setExpanded] = React.useState(false);
 
-//         </div >
-//     )
-// }
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
-// export default PostItem
+    return (
+        <Card className={classes.root}>
+            <CardHeader
 
 
-//  <div className={s.card}>
-//                 <div className={s.cardWrapper}>
-//                     <div className={s.cardMedia}>
-//                         <img src={postslist.data.url_overridden_by_dest} alt="" />
-//                     </div>
-//                     <div className={s.cardText}>
-//                         <p>
-//                             {postslist.data.title}
-//                         </p>
-//                         <div className="div">
-//                             <h6>{postslist.data.author_flair_text}</h6>
-//                             <h4>posted by <span>{postslist.data.author}</span> </h4>
-//                             <h5>{postslist.data.subreddit_name_prefixed}</h5>
-//                             <div className={s.cardAction}>
-//                                 <a href={postlink} target="_blank" without rel="noreferrer"> show comment</a>
-//                             </div>
-//                         </div>
+                // title="Shrimp and Chorizo Paella"
+                subheader={props.data.data.subreddit_name_prefixed}
+            />
+            <CardMedia
+                component={(props.data.data.is_video === false) ? 'img' : 'video'}
+                className={classes.media}
+                image={(props.data.data.is_video === false) ? props.data.data.url : ''}
+                src={(props.data.data.is_video !== false) ? props.data.data.media.reddit_video.fallback_url : ''}
+                title="Paella dish"
+                autoPlay
+            />
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    posted by {props.data.data.author}
+                </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+                <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                </IconButton>
+                <IconButton
+                    className={clsx(classes.expand, {
+                        [classes.expandOpen]: expanded,
+                    })}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                >
+                    <ExpandMoreIcon />
+                </IconButton>
+            </CardActions>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>
+                    <Typography paragraph>{props.data.data.title}</Typography>
 
-//                     </div>
-
-//                 </div>
-
-//                 <FavoriteButton />
-//             </div>
+                </CardContent>
+            </Collapse>
+        </Card>
+    );
+}
+export default PostItem

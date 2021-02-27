@@ -28,9 +28,9 @@ export default class Layout extends Component {
                     onToggle={this.toggleMenuHandler}
                     isOpen={this.state.menu}
                 />
-                <main>
-                    {this.props.children}
-                </main>
+
+                {this.props.children}
+
             </div>
         )
     }

@@ -1,24 +1,21 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Grid from '@material-ui/core/Grid';
+import PostItem from './PostItem/PostItem'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
+        boxSizing: 'border-box',
+        width: '90%',
+        margin: '0 auto',
+        // flexGrow: 1
     },
-    gridList: {
-        width: 1200,
-        height: '100%'
-
+    gridItem: {
+        boxSizing: 'border-box',
+        width: 400,
+        height: 400,
+        margin: 10,
+        padding: 0,
     },
     icon: {
         color: 'rgba(255, 255, 255, 0.54)',
@@ -36,49 +33,28 @@ const useStyles = makeStyles((theme) => ({
 
 const PostsList = ({ content }) => {
 
+    const [spacing, setSpasing] = React.useState(2)
     const classes = useStyles();
+
 
     if (content) {
         return (
-            <div className={classes.root}>
-                <GridList cellHeight={380} cols={3} className={classes.gridList}>
-                    {/* <GridListTile key="Subheader" cols={2} style={{ height: 'auto', width: '100%' }}>
-                        <ListSubheader component="div">Clone reddit content</ListSubheader>
-                    </GridListTile> */}
-                    {content.map((tile) => {
-                        if (tile.data.preview) {
-                            return (
 
-                                <GridListTile key={tile.data.id}>
-                                    {tile.data.is_video === false
-                                        ? <img src={tile.data.url} alt={tile.data.author} />
-                                        : <video controls autoPlay loop
-                                            src={tile.data.media.reddit_video.fallback_url}
-                                        >
-                                        </video>
-                                    }
-                                    <GridListTileBar
-                                        title={tile.data.title}
-                                        subtitle={<span>posted by: <a
-                                            href={'https://www.reddit.com/user/' + tile.data.author}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                            className={classes.a}
-                                        > {tile.data.author}
-                                        </a></span>}
-                                        actionIcon={
-                                            <IconButton aria-label={`star ${tile.title}`} className={classes.icon}>
-                                                <StarBorderIcon />
-                                            </IconButton>
-                                        }
-                                    />
-                                </GridListTile>
-                            )
+            <Grid container justify='center' spacing={10} className={classes.root}>
+                <Grid item xs={12} >
+                    <Grid container justify='center' spacing={spacing}>
+                        {content.map((tile) => {
+                            if (tile.data.preview) {
+                                return (
+                                    <PostItem key={tile.data.id} data={tile} />
+                                )
+                            }
                         }
-                    }
-                    )}
-                </GridList>
-            </div>
+                        )}
+                    </Grid>
+
+                </Grid>
+            </Grid>
         )
     }
 
