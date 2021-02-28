@@ -5,6 +5,7 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
+
 const application = (
   <BrowserRouter>
     <App/>
@@ -13,8 +14,10 @@ const application = (
 
 ReactDOM.render(
   <React.StrictMode>
-    {application}
-  </React.StrictMode>,
+      {application}
+  </React.StrictMode>
+  ,
+    
   document.getElementById('root')
 );
 

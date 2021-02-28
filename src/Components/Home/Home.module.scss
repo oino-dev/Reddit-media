@@ -10,7 +10,12 @@
   justify-content: center;
 }
 .noMedia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   text-align: center;
   font-weight: 700;
   font-size: 2rem;
 }
+

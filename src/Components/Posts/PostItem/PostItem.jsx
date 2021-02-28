@@ -70,7 +70,14 @@ const PostItem = (props) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
+                <IconButton aria-label="add to favorites" onClick={() => {
+                    localStorage.setItem('posts', JSON.stringify([
+                        { id: props.data.data.id },
+                        { url: props.data.data.url },
+                        { title: props.data.data.title },
+
+                    ]))
+                }}>
                     <FavoriteIcon />
                 </IconButton>
                 <IconButton
@@ -90,7 +97,7 @@ const PostItem = (props) => {
 
                 </CardContent>
             </Collapse>
-        </Card>
+        </Card >
     );
 }
 export default PostItem

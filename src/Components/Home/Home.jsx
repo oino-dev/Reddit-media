@@ -6,7 +6,6 @@ import ButtonPrev from '../UI/Buttons/ButtonPrev'
 
 
 
-
 export default class Home extends Component {
 
 
@@ -23,11 +22,13 @@ export default class Home extends Component {
     state = {
         currentSubreddit: 'cats',
         sort: 'top',
+        sorts: ['hot', 'new', 'top', 'controversial', 'rising'],
         after: null,
         before: null,
         loading: true,
         page: 1,
-        posts: []
+        posts: [],
+        favorite: []
     }
     componentDidMount() {
         this.renderMedia(this.state.currentSubreddit)
@@ -35,8 +36,7 @@ export default class Home extends Component {
 
 
 
-    // !Наполняем state из .JSON --------------start------------
-
+    // Наполняем state из .JSON --------------start------------
     renderMedia(sub) {
 
         this.setState({
@@ -56,14 +56,9 @@ export default class Home extends Component {
                 window.scroll(0, 0)
             })
     }
-    // !Наполняем state из .JSON --------------end------------
-    // *
-    // *
-    // *
-    // * 
-    // * 
-    // *
-    // !Следующая страница--------------start------------
+    // Наполняем state из .JSON --------------end------------
+
+    // Пледующая страница--------------start------------
 
     clickButtonNextHandler = () => {
 
@@ -81,14 +76,9 @@ export default class Home extends Component {
             })
     }
 
-    // !Следующая страница--------------end------------
-    // *
-    // *
-    // *
-    // * 
-    // * 
-    // *
-    // !Предыдущая страница--------------start------------
+    // Следующая страница--------------end------------
+
+    // Предыдущая страница--------------start------------
     clickButtonPrevHandler = () => {
 
         fetch(this.url + this.state.currentSubreddit + '/' + this.state.sort + '.json?count=' + (((this.state.page - 1) * 25) - 1) + '&before=' + this.state.after)
@@ -104,25 +94,34 @@ export default class Home extends Component {
                 window.scrollTo(0, 0)
             })
     }
+    // Предыдущая страница--------------end------------
+    // Добавить в избранное--------------start------------
+    addToFavorite() {
+        localStorage.setItem('post', JSON.stringify(this.state.posts.data.data.id))
+    }
 
-
-
-
-    // !Предыдущая страница--------------end------------
-
-    // *
-    // *
-    // *
-    // * 
-    // * 
-    // *
-    // !Рендер контента --------------start------------
+    // Добавить в избранное--------------end------------
+    // Рендер контента --------------start------------
     render() {
-
-
         let contentMedia
         if (this.state.posts.length > 0) {
-            contentMedia = <div > <PostList content={this.state.posts} /></div>
+            let pageNow
+            const nextBtn = <ButtonNext onClick={this.clickButtonNextHandler} />
+            const prevBtn = <ButtonPrev onClick={this.clickButtonPrevHandler} />
+            if (this.state.before === null && this.state.after !== null) {
+                pageNow = <div className={s.HomeButton}>{prevBtn} </div>
+            }
+            if (this.state.before === null && this.state.after !== null) {
+                pageNow = <div className={s.HomeButton}>{nextBtn} </div>
+            }
+            if (this.state.after !== null && this.state.before !== null) {
+                pageNow =
+                    <div className={s.HomeButton}>{prevBtn}{nextBtn}</div>
+            }
+            contentMedia = <div >
+                <PostList content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
+                {pageNow}
+            </div >
         } else contentMedia = <div className={s.noMedia}>Котиков слишком много....загружаю...</div>
 
         return (
@@ -130,10 +129,6 @@ export default class Home extends Component {
                 <main  >
                     {contentMedia}
                 </main >
-                <div className={s.HomeButton}>
-                    <ButtonPrev onClick={this.clickButtonPrevHandler} />
-                    <ButtonNext onClick={this.clickButtonNextHandler} />
-                </div>
             </React.Fragment >
         )
     }

@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom'
 import Backdrop from '../../UI/Backdrop/Backdrop'
 import s from './Drawer.module.scss'
 
+
 const links = [
-    { to: '/', label: 'Home', exact: true },
-    { to: '/favorite', label: 'Favorite', exact: false },
-    { to: '/random', label: 'Random', exact: false },
+    { to: '/', label: 'Главная', exact: true },
+    { to: '/favorite', label: 'Избранное', exact: false },
 ]
 
 
@@ -25,6 +25,7 @@ export default class Drawer extends Component {
                         exact={link.exact}
                         activeClassName={s.active}
                         onClick={this.clickHandler}
+                        component={this.component}
                     >
                         {link.label}
                     </NavLink>
@@ -44,7 +45,6 @@ export default class Drawer extends Component {
         return (
             <React.Fragment>
                 <nav className={cls.join(' ')}>
-                    <input type="text" placeholder='Search' />
                     <ul>
                         {this.renderLinks()}
                     </ul>
