@@ -12,7 +12,7 @@ export default class Home extends Component {
 
     constructor(props) {
         super(props)
-        this.url = 'http://www.reddit.com/r/'
+        this.url = 'https://www.reddit.com/r/'
         this.sorts = ['hot', 'new', 'top', 'controversial', 'rising']
         this.subredditArray = ['cats', 'dogs']
     }
