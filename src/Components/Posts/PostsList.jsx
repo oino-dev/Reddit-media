@@ -33,16 +33,16 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const PostsList = ({ content, sorting, changeSort }) => {
+const PostsList = ({ content, onSearch }) => {
 
-
+    console.log('onSearch', onSearch);
     const [spacing, setSpasing] = React.useState(2)
     const classes = useStyles();
 
     if (content) {
         return (
             <Grid container justify='center' spacing={10} className={classes.root}>
-                <Search />
+                <Search onSearch={onSearch} />
                 {/* <SortMenu onClick={changeSort} sorting={sort} /> */}
                 <Grid item xs={12} >
                     <Grid container justify='center' spacing={spacing}>

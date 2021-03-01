@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import s from './Home.module.scss'
+import _ from 'lodash'
 import PostList from '../Posts/PostsList'
 import ButtonNext from '../UI/Buttons/ButtonNext'
 import ButtonPrev from '../UI/Buttons/ButtonPrev'
@@ -102,26 +103,13 @@ export default class Home extends Component {
     }
     // Добавить в избранное--------------end------------
     // Поиск  --------------start------------
-    changeSubreddit(sub) {
-        this.setState({
-            posts: [],
-            currentSubreddit: sub,
-            page: 1
-        })
-        fetch(this.url + sub + '/' + this.state.sort + '.json')
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    posts: data.data.children,
-                    after: data.data.after,
-                    before: data.data.before
-                })
-                window.scrollTo(0, 0)
-            })
+    searchSubreddit(subreddit) {
+        this.renderMedia(subreddit)
     }
     // Поиск--------------end------------
     // Рендер контента --------------start------------
     render() {
+        const searchSubreddit = _.debounce((term) => { this.searchSubreddit(term) }, 1000)
         let contentMedia
         if (this.state.posts.length > 0) {
             let pageNow
@@ -139,14 +127,13 @@ export default class Home extends Component {
             }
             contentMedia = <div >
 
-                <PostList content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
+                <PostList onSearch={term => searchSubreddit(term)} content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
                 {pageNow}
             </div >
         } else contentMedia = <div className={s.noMedia}>Котиков слишком много....загружаю...</div>
 
         return (
             <React.Fragment>
-                <Search />
                 <main  >
                     {contentMedia}
                 </main >

@@ -1,49 +1,56 @@
-
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import InputBase from '@material-ui/core/InputBase';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
+import styled from 'styled-components'
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        marginTop: 20,
-        padding: '2px 4px',
-        display: 'flex',
-        alignItems: 'center',
-        width: 800,
-    },
-    input: {
-        // marginTop: 15,
-        marginLeft: theme.spacing(1),
-        flex: 1,
-    },
-    iconButton: {
-        padding: 10,
-    },
-    divider: {
-        height: 28,
-        margin: 4,
-    },
-}));
 
-export default function CustomizedInputBase() {
-    const classes = useStyles();
+const Wrapper = styled.div`
+margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    & p{
+        margin-right:10px;
+    }
+    & input {
+        padding: 5px 15px;
+        border:none;
+        border-radius: 27px;
+    }
+    `
 
-    return (
-        <Paper component="form" className={classes.root}>
-            <InputBase
-                className={classes.input}
-                placeholder="Введите категорию, которую хотите посмотреть"
-                inputProps={{ 'aria-label': 'search category' }}
-            />
-            <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                <SearchIcon />
-            </IconButton>
-        </Paper>
-    );
+class Search extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            term: ''
+        }
+    }
+
+
+
+    render() {
+        return (
+            <Wrapper>
+                <div >
+                    <p> Поисе по r/  </p>
+                </div>
+
+                <input
+                    type="text"
+                    onChange={event => this.search(event.target.value)}
+                    value={this.state.term}
+                    name="search"
+                    placeholder="wallpapers" />
+
+            </Wrapper>
+        );
+    }
+
+    search(term) {
+        this.setState({ term });
+        this.props.onSearch(term);
+    }
 }
+
+export default Search;
