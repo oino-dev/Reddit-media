@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 const PostsList = ({ content, onSearch }) => {
 
-    console.log('onSearch', onSearch);
     const [spacing, setSpasing] = React.useState(2)
     const classes = useStyles();
 

@@ -17,6 +17,7 @@ export default class Home extends Component {
         this.url = 'https://www.reddit.com/r/'
         this.sorts = ['hot', 'new', 'top', 'controversial', 'rising']
         this.subredditArray = ['cats', 'dogs']
+        this.delay = 'top'
     }
 
 
@@ -104,7 +105,11 @@ export default class Home extends Component {
     // Добавить в избранное--------------end------------
     // Поиск  --------------start------------
     searchSubreddit(subreddit) {
-        this.renderMedia(subreddit)
+        if (subreddit.length) {
+            this.renderMedia(subreddit)
+        } else {
+            this.renderMedia(this.delay)
+        }
     }
     // Поиск--------------end------------
     // Рендер контента --------------start------------

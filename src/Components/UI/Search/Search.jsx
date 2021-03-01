@@ -11,9 +11,14 @@ margin-top: 20px;
         margin-right:10px;
     }
     & input {
+        outline: none;
         padding: 5px 15px;
         border:none;
         border-radius: 27px;
+        &:active {
+            outline:none;
+            border:none;
+        }
     }
     `
 
@@ -41,7 +46,7 @@ class Search extends React.Component {
                     onChange={event => this.search(event.target.value)}
                     value={this.state.term}
                     name="search"
-                    placeholder="wallpapers" />
+                    placeholder="Например dog" />
 
             </Wrapper>
         );

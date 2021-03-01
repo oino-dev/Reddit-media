@@ -59,7 +59,6 @@ export default class Favorite extends Component {
                 <StyledH1>
                     Здесь должны быть избранные посты
                 </StyledH1>
-                {/* <button onClick={this.renderMedia}>Click</button> */}
                 {content}
             </ContainerDiv>
 
