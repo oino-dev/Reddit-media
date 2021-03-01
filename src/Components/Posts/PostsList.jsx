@@ -2,7 +2,8 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import PostItem from './PostItem/PostItem'
-// import SortMenu from '../UI/SortMenu/SortMenu'
+import Search from '../UI/Search/Search'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,9 +42,11 @@ const PostsList = ({ content, sorting, changeSort }) => {
     if (content) {
         return (
             <Grid container justify='center' spacing={10} className={classes.root}>
+                <Search />
                 {/* <SortMenu onClick={changeSort} sorting={sort} /> */}
                 <Grid item xs={12} >
                     <Grid container justify='center' spacing={spacing}>
+
                         {content.map((tile) => {
                             if (tile.data.preview) {
                                 return (

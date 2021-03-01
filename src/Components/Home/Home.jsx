@@ -3,6 +3,7 @@ import s from './Home.module.scss'
 import PostList from '../Posts/PostsList'
 import ButtonNext from '../UI/Buttons/ButtonNext'
 import ButtonPrev from '../UI/Buttons/ButtonPrev'
+import Search from '../UI/Search/Search'
 
 
 
@@ -99,8 +100,26 @@ export default class Home extends Component {
     addToFavorite() {
         localStorage.setItem('post', JSON.stringify(this.state.posts.data.data.id))
     }
-
     // Добавить в избранное--------------end------------
+    // Поиск  --------------start------------
+    changeSubreddit(sub) {
+        this.setState({
+            posts: [],
+            currentSubreddit: sub,
+            page: 1
+        })
+        fetch(this.url + sub + '/' + this.state.sort + '.json')
+            .then(res => res.json())
+            .then(data => {
+                this.setState({
+                    posts: data.data.children,
+                    after: data.data.after,
+                    before: data.data.before
+                })
+                window.scrollTo(0, 0)
+            })
+    }
+    // Поиск--------------end------------
     // Рендер контента --------------start------------
     render() {
         let contentMedia
@@ -119,6 +138,7 @@ export default class Home extends Component {
                     <div className={s.HomeButton}>{prevBtn}{nextBtn}</div>
             }
             contentMedia = <div >
+
                 <PostList content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
                 {pageNow}
             </div >
@@ -126,6 +146,7 @@ export default class Home extends Component {
 
         return (
             <React.Fragment>
+                <Search />
                 <main  >
                     {contentMedia}
                 </main >
