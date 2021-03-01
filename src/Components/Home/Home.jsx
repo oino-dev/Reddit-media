@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import s from './Home.module.scss'
+import _ from 'lodash'
 import PostList from '../Posts/PostsList'
 import ButtonNext from '../UI/Buttons/ButtonNext'
 import ButtonPrev from '../UI/Buttons/ButtonPrev'
+import Search from '../UI/Search/Search'
 
 
 
@@ -15,6 +17,7 @@ export default class Home extends Component {
         this.url = 'https://www.reddit.com/r/'
         this.sorts = ['hot', 'new', 'top', 'controversial', 'rising']
         this.subredditArray = ['cats', 'dogs']
+        this.delay = 'top'
     }
 
 
@@ -99,10 +102,19 @@ export default class Home extends Component {
     addToFavorite() {
         localStorage.setItem('post', JSON.stringify(this.state.posts.data.data.id))
     }
-
     // Добавить в избранное--------------end------------
+    // Поиск  --------------start------------
+    searchSubreddit(subreddit) {
+        if (subreddit.length) {
+            this.renderMedia(subreddit)
+        } else {
+            this.renderMedia(this.delay)
+        }
+    }
+    // Поиск--------------end------------
     // Рендер контента --------------start------------
     render() {
+        const searchSubreddit = _.debounce((term) => { this.searchSubreddit(term) }, 1000)
         let contentMedia
         if (this.state.posts.length > 0) {
             let pageNow
@@ -119,7 +131,8 @@ export default class Home extends Component {
                     <div className={s.HomeButton}>{prevBtn}{nextBtn}</div>
             }
             contentMedia = <div >
-                <PostList content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
+
+                <PostList onSearch={term => searchSubreddit(term)} content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
                 {pageNow}
             </div >
         } else contentMedia = <div className={s.noMedia}>Котиков слишком много....загружаю...</div>
