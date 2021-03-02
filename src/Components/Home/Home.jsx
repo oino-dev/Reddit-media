@@ -4,7 +4,6 @@ import _ from 'lodash'
 import PostList from '../Posts/PostsList'
 import ButtonNext from '../UI/Buttons/ButtonNext'
 import ButtonPrev from '../UI/Buttons/ButtonPrev'
-import Search from '../UI/Search/Search'
 
 
 
@@ -68,7 +67,6 @@ export default class Home extends Component {
         fetch(this.url + this.state.currentSubreddit + '/' + this.state.sort + '.json?count=' + (this.state.page * 25) + '&after=' + this.state.after)
             .then(res => res.json())
             .then((data) => {
-                console.log(data);
                 this.setState({
                     posts: data.data.children,
                     after: data.data.after,
@@ -87,7 +85,6 @@ export default class Home extends Component {
         fetch(this.url + this.state.currentSubreddit + '/' + this.state.sort + '.json?count=' + (((this.state.page - 1) * 25) - 1) + '&before=' + this.state.after)
             .then(res => res.json())
             .then((data) => {
-                console.log(data);
                 this.setState({
                     posts: data.data.children,
                     after: data.data.after,
@@ -98,11 +95,7 @@ export default class Home extends Component {
             })
     }
     // Предыдущая страница--------------end------------
-    // Добавить в избранное--------------start------------
-    addToFavorite() {
-        localStorage.setItem('post', JSON.stringify(this.state.posts.data.data.id))
-    }
-    // Добавить в избранное--------------end------------
+
     // Поиск  --------------start------------
     searchSubreddit(subreddit) {
         if (subreddit.length) {
@@ -112,8 +105,24 @@ export default class Home extends Component {
         }
     }
     // Поиск--------------end------------
+    // Добавить в избранное--------------start------------
+    addToFavorite = () => {
+        // let posts = JSON.parse(localStorage.getItem('posts') || [])
+        // posts.forEach(function (post, index) {
+        //     console.log(post);
+        // })
+        // let post = JSON.parse(localStorage.getItem('posts'))
+        // posts.push([post])
+
+        // localStorage.setItem('posts', JSON.stringify(posts))
+
+        console.log('transfered');
+        // console.log('posts', posts);
+    }
+    // Добавить в избранное--------------end------------
     // Рендер контента --------------start------------
     render() {
+        console.log(localStorage.getItem('posts'));
         const searchSubreddit = _.debounce((term) => { this.searchSubreddit(term) }, 1000)
         let contentMedia
         if (this.state.posts.length > 0) {
@@ -132,13 +141,15 @@ export default class Home extends Component {
             }
             contentMedia = <div >
 
-                <PostList onSearch={term => searchSubreddit(term)} content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
+                <PostList isFavorite={this.addToFavorite} onSearch={term => searchSubreddit(term)} content={this.state.posts} changeSort={this.changeSort} sorting={this.state.sorts} />
                 {pageNow}
             </div >
         } else contentMedia = <div className={s.noMedia}>Котиков слишком много....загружаю...</div>
 
         return (
             <React.Fragment>
+
+
                 <main  >
                     {contentMedia}
                 </main >

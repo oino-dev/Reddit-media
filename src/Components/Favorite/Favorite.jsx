@@ -13,6 +13,7 @@ display: flex;
 justify-content: center;
 width:100%;
 height:100vh;
+background-color: red;
 align-items: center;
 flex-direction:column;
 `
@@ -22,8 +23,6 @@ flex-direction:column;
 
 
 export default class Favorite extends Component {
-
-
     constructor(props) {
         super(props)
         this.url = 'http://www.reddit.com/r/'
@@ -40,27 +39,38 @@ export default class Favorite extends Component {
     }
 
 
-    renderMedia = () => {
-        fetch(this.url + this.state.currentSubreddit + '.json')
-            .then(res => res.json())
-            .then((data) => {
-                this.setState({
-                    posts: data.data.children,
-                })
-            })
+
+    // Добавить в избранное--------------start------------
+    addToFavorite = () => {
+        let posts = JSON.parse(localStorage.getItem('posts'))
+        posts.forEach(function (post, index) {
+            console.log(post.id);
+        })
+        let post = JSON.parse(localStorage.getItem('posts'))
+        posts.push(post)
+
+        localStorage.setItem('posts', JSON.s)
+
+
+
     }
+    // Добавить в избранное--------------end------------
+
+
+
+
 
 
     render() {
-        let content = <div> <FavItem files={this.state.posts} /> </div>
+
+        let content = <FavItem />
 
         return (
-            <ContainerDiv>
-                <StyledH1>
-                    Здесь должны быть избранные посты
-                </StyledH1>
+            <React.Fragment>
                 {content}
-            </ContainerDiv>
+
+                {/* {content} */}
+            </React.Fragment>
 
 
 

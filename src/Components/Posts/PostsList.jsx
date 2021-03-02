@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const PostsList = ({ content, onSearch }) => {
+const PostsList = ({ content, onSearch, isFavorite }) => {
 
     const [spacing, setSpasing] = React.useState(2)
     const classes = useStyles();
@@ -49,7 +49,7 @@ const PostsList = ({ content, onSearch }) => {
                         {content.map((tile) => {
                             if (tile.data.preview) {
                                 return (
-                                    <PostItem key={tile.data.id} data={tile} content={content} />
+                                    <PostItem isFavorite={isFavorite} key={tile.data.id} data={tile} content={content} />
                                 )
                             }
                         }

@@ -35,12 +35,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
-
-
-
-
-const PostItem = (props) => {
-    // console.log('props', props.isFavorite);
+const FavCard = ({ file }) => {
 
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -49,54 +44,20 @@ const PostItem = (props) => {
         setExpanded(!expanded);
     };
 
-    const favObj =
-
-    {
-        id: props.data.data.id,
-        url: props.data.data.url,
-        title: props.data.data.title
-    }
-
-
-    const addToFavorite = () => {
-
-        let posts = JSON.parse(localStorage.getItem('posts') || '[]')
-        posts.forEach(function (post, index) { console.log(post.id); })
-        posts.push(favObj);
-        localStorage.setItem('posts', JSON.stringify(posts))
-        console.log(posts);
-
-        // let serialObj = localStorage.setItem('posts', JSON.stringify(favObj))
-
-        // let returnObj = JSON.parse(localStorage.getItem('posts') || [])
-        // returnObj.push(serialObj)
-        // console.log('return', returnObj);
-    }
-
-
-
-
 
     return (
         <Card className={classes.root}>
-            <CardHeader
-                subheader={props.data.data.subreddit_name_prefixed}
-            />
+
             <CardMedia
-                component={(props.data.data.is_video === false) ? 'img' : 'video'}
+                // component={(props.data.data.is_video === false) ? 'img' : 'video'}
                 className={classes.media}
-                image={(props.data.data.is_video === false) ? props.data.data.url : ''}
-                src={(props.data.data.is_video !== false) ? props.data.data.media.reddit_video.fallback_url : ''}
-                title="Paella dish"
+                image={file.url}
+                // src={(props.data.data.is_video !== false) ? props.data.data.media.reddit_video.fallback_url : ''}
+                title={file.title}
                 autoPlay
             />
-            <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    posted by {props.data.data.author}
-                </Typography>
-            </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites" onClick={addToFavorite}>
+                <IconButton aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
                 <IconButton
@@ -112,11 +73,13 @@ const PostItem = (props) => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>{props.data.data.title}</Typography>
+                    <Typography paragraph>{file.title}</Typography>
 
                 </CardContent>
             </Collapse>
         </Card >
     );
+
 }
-export default PostItem
+
+export default FavCard
