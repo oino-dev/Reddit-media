@@ -2,16 +2,14 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,16 +47,16 @@ const FavCard = ({ file }) => {
         <Card className={classes.root}>
 
             <CardMedia
-                // component={(props.data.data.is_video === false) ? 'img' : 'video'}
+                component={(file.video === false) ? 'img' : 'video'}
                 className={classes.media}
-                image={file.url}
-                // src={(props.data.data.is_video !== false) ? props.data.data.media.reddit_video.fallback_url : ''}
+                image={(file.video === false) ? file.url : ''}
+                src={(file.video !== false) ? file.videoUrl : ''}
                 title={file.title}
                 autoPlay
             />
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                    <HighlightOffIcon />
                 </IconButton>
                 <IconButton
                     className={clsx(classes.expand, {

@@ -54,14 +54,17 @@ const PostItem = (props) => {
     {
         id: props.data.data.id,
         url: props.data.data.url,
-        title: props.data.data.title
+        title: props.data.data.title,
+        video: props.data.data.is_video,
+        videoUrl: (props.data.data.is_video) ? props.data.data.media.reddit_video.fallback_url : ''
+
     }
 
 
     const addToFavorite = () => {
 
         let posts = JSON.parse(localStorage.getItem('posts') || '[]')
-        posts.forEach(function (post, index) { console.log(post.id); })
+        // posts.forEach(function (post, index) { console.log(post.id); })
         posts.push(favObj);
         localStorage.setItem('posts', JSON.stringify(posts))
         console.log(posts);

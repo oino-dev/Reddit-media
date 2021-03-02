@@ -4,7 +4,7 @@ import FavItem from './FavItem/FavItem'
 
 const StyledH1 = styled.h1`
 margin:0;
-background-color: transparent;
+letter-spacing: 0.1rem;
 `
 
 
@@ -13,7 +13,7 @@ display: flex;
 justify-content: center;
 width:100%;
 height:100vh;
-background-color: red;
+/* background-color: red; */
 align-items: center;
 flex-direction:column;
 `
@@ -62,15 +62,26 @@ export default class Favorite extends Component {
 
 
     render() {
+        let content
+        let checkStorage = localStorage.getItem('posts')
+        if (checkStorage !== null) {
+            content = <FavItem />
+        } else {
 
-        let content = <FavItem />
+            content =
+                <StyledH1>
+                    <h5>Вы ничего не добавили в избраное :(</h5>
+                </StyledH1>
+
+        }
+
 
         return (
-            <React.Fragment>
+            <ContainerDiv>
                 {content}
 
                 {/* {content} */}
-            </React.Fragment>
+            </ContainerDiv>
 
 
 

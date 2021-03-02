@@ -38,14 +38,17 @@ const PostsList = () => {
     const [spacing, setSpasing] = React.useState(2)
     const classes = useStyles();
 
+    // Генерим карточки избранного
+
     let postsArr = JSON.parse(localStorage.getItem('posts'))
+
     return (
         <Grid container justify='center' spacing={10} className={classes.root}>
             <Grid item xs={12} >
                 <Grid container justify='center' spacing={spacing}>
                     {postsArr.map((post, index) => {
                         return (
-                            <FavCard key={index} file={post} />
+                            <FavCard key={post.id} file={post} />
                         )
                     })}
 
